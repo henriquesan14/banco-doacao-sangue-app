@@ -1,7 +1,7 @@
 import { Route } from "@angular/router";
-import { CadastroDoacoesComponent } from "../doacoes/cadastro-doacoes/cadastro-doacoes.component";
+import { CadastroDoadoresComponent } from "./cadastro-doadores/cadastro-doadores.component";
 
 export const PARTES_ROUTES: Route[] = [
   
-  {path: '', component: CadastroDoacoesComponent},
+  {path: '', component: CadastroDoadoresComponent},
 ];

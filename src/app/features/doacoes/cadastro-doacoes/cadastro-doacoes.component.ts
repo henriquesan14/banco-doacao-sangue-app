@@ -1,53 +1,76 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { DoadoresService } from '../../../shared/services/doadores.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { NgxMaskDirective } from 'ngx-mask';
+import { SelectAutocompleteComponent } from '../../../shared/components/select-autocomplete/select-autocomplete.component';
+import { Doador } from '../../../core/models/doador.interface';
+import { DoacaoService } from '../../../shared/services/doacao.service';
 
 @Component({
   selector: 'app-cadastro-doacoes',
   standalone: true,
-  imports: [ReactiveFormsModule, NgxMaskDirective],
+  imports: [ReactiveFormsModule, NgxMaskDirective, SelectAutocompleteComponent],
   templateUrl: './cadastro-doacoes.component.html',
   styleUrl: './cadastro-doacoes.component.css'
 })
 export class CadastroDoacoesComponent {
   subscription$!: Subscription;
-  formDoador!: FormGroup;
-  constructor(private doadoresService: DoadoresService, private formBuilder: FormBuilder){
+  formDoacao!: FormGroup;
+  doadores: Doador[] = [];
+  @ViewChild(SelectAutocompleteComponent) selectAutoCompleteComponent!: SelectAutocompleteComponent;
+
+  constructor(private doadoresService: DoadoresService, private doacaoService: DoacaoService, private formBuilder: FormBuilder){
   }
 
   ngOnInit(): void {
-    this.formDoador = this.formBuilder.group({
-      nomeCompleto: [null, [Validators.required, Validators.maxLength(200)]],
-      email: [null, [Validators.required, Validators.email, Validators.maxLength(100)]],
-      dataNascimento: [null, [Validators.required]],
-      genero: [null, [Validators.required]],
-      peso: [null, [Validators.required]],
-      tipoSanguineo: [null, [Validators.required]],
-      fatorRh: [null, [Validators.required]],
-      cep: [null, [Validators.required]]
+    this.getDoadores();
+    this.formDoacao = this.formBuilder.group({
+      doadorId: [null, [Validators.required]],
+      quantidadeMl: [null, [Validators.required]]
     });
+  }
+
+  resetarSelectAutoComplete(): void {
+    if (this.selectAutoCompleteComponent) {
+      this.selectAutoCompleteComponent.resetSelectedItem(); // Chama a função reset() do componente filho
+    }
   }
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
   }
 
+  doadorSelected(doador: Doador){
+    if(doador){
+      this.formDoacao.get('doadorId')?.setValue(doador.id);
+    }
+  }
+    
+
+  getDoadores(){
+    this.doadoresService.buscaDoadores().subscribe({
+      next: (res) => {
+        this.doadores = res;
+      }
+    });
+  }
+
 
   onSubmit(){
-    if(this.formDoador.valid){
-      this.doadoresService.cadastrarDoador(this.formDoador.value).subscribe({
+    if(this.formDoacao.valid){
+      this.doacaoService.cadastrarDoacao(this.formDoacao.value).subscribe({
         next: (res) => {
+          this.resetarSelectAutoComplete();
           alert('cadastrou');
-          this.formDoador.reset();
+          this.formDoacao.reset();
         }
       })
     }
   }
 
   validaCampo(field: string){
-    return this.formDoador.get(field)?.touched && !this.formDoador.get(field)?.valid;
+    return this.formDoacao.get(field)?.touched && !this.formDoacao.get(field)?.valid;
   }
 
 

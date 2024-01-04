@@ -14,4 +14,8 @@ export class DoadoresService {
   cadastrarDoador(doador: Doador): Observable<void>{
     return this.http.post<void>(`${this.API}/api/doador`, doador);
   }
+
+  buscaDoadores(): Observable<Doador[]>{
+    return this.http.get<Doador[]>(`${this.API}/api/doador`);
+  }
 }

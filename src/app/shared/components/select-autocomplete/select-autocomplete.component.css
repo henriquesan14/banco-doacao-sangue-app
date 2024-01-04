@@ -1,0 +1,102 @@
+.autocomplete{
+    width: 100%;
+    position: relative;
+}
+
+.input{
+    height: 38.48px;
+    border-radius: var(--bs-border-radius);
+    border: 2px solid lightgray;
+    box-shadow: 0 0 10px #eceaea;
+    padding-left: 10px;
+    cursor: text;
+}
+
+.input span{
+    font-size: 1rem;
+    position: absolute;
+    top: 6px;
+}
+
+.input #placeholder{
+    opacity: 0.7;
+}
+
+.close {
+    font-size:1.1rem;
+    color:#e74c3c;
+    position: absolute;
+    right: 2px;
+    top: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.close i:hover{
+    color: #c0392b;
+}
+
+.popover{
+    min-height: 50px;
+    border: 2px solid lightgray;
+    position: absolute;
+    top:34px;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.popover input {
+    width: 98%;
+    margin-top: 5px;
+    font-size: 1rem;
+    border-radius: 3px;
+    border: 1px solid lightgray;
+    margin: 8px auto;
+}
+
+.options {
+    max-height: 150px;
+    overflow-y: scroll;
+    margin-top: 5px;
+}
+
+.options ul {
+    list-style-type: none;
+    text-align: left;
+    padding-left: 0;
+}
+
+.options ul li {
+    border-bottom: 1px solid lightgray;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.options ul li:first-child {
+    border-top: 2px solid #d6d6d6;
+}
+.options ul li:not(.selected):hover {
+    background: #8c8c8c;
+    color: #fff;
+}
+
+.options ul li.selected {
+    background: #3498db;
+    color: #fff;
+    font-weight: 600;
+}
+
+
+::-webkit-scrollbar {
+width: 8px;
+}
+::-webkit-scrollbar-thumb {
+-webkit-border-radius: 10px;
+border-radius: 10px;
+background-color: #2980b9;
+}
