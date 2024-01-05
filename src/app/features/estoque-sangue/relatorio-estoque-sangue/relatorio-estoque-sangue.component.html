@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Estoque Banco de Sangue</h2>
+    </div>
+    
+    <div class="row">
+        @for(estoque of estoqueSangue; track $index){
+            <div class="col-sm-4">
+                <h3>{{estoque.tipoSanguineo}}{{estoque.fatorRh == 'positivo' ? '+' : '-'}}</h3>
+                <div [ngClass]="{
+                    'critico': estoque.totalMl <= 500,
+                    'alerta': estoque.totalMl >500 && estoque.totalMl <= 2000,
+                    'estavel': estoque.totalMl > 2000
+                  }" class="card-tipo-sanguineo">
+                    <h4>{{estoque.totalMl}}</h4>
+                </div>
+            </div>
+        }
+    
+
+
+    </div>
+
+    
+        
+    
+    
+	
+    
+</div>

@@ -1,0 +1,22 @@
+.card-tipo-sanguineo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 10rem;
+    height: 12rem;
+    border-radius: 20px;
+    border: 2px solid black;
+    
+}
+
+.critico{
+    background: linear-gradient(to bottom, transparent 90%, red 10%);
+}
+
+.alerta{
+    background: linear-gradient(to bottom, transparent 70%, rgb(243, 180, 8) 30%);
+}
+
+.estavel{
+    background: linear-gradient(to bottom, transparent 10%, rgb(22, 231, 3) 90%);
+}
