@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Doacao } from '../../../core/models/doacao.interface';
 import { DoacaoService } from '../../../shared/services/doacao.service';
@@ -14,7 +14,7 @@ import { faEye, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './lista-doacoes.component.html',
   styleUrl: './lista-doacoes.component.css'
 })
-export class ListaDoacoesComponent {
+export class ListaDoacoesComponent implements OnDestroy {
   subscription$!: Subscription;
   doacoes: Doacao[] = [];
   faPencil = faPencil;
@@ -32,7 +32,7 @@ export class ListaDoacoesComponent {
   }
 
   getDoacoes(){
-    this.doacaoService.buscaDoacoes().subscribe({
+    this.subscription$ = this.doacaoService.buscaDoacoes().subscribe({
       next: (res: Doacao[]) => {
         this.doacoes = res;
       }

@@ -1,52 +1,35 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DoadoresService } from '../../../shared/services/doadores.service';
-import { NgxMaskDirective } from 'ngx-mask';
+import { FormDoadorComponent } from '../form-doador/form-doador.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-cadastro-doadores',
   standalone: true,
-  imports: [ReactiveFormsModule, NgxMaskDirective],
+  imports: [FormDoadorComponent],
   templateUrl: './cadastro-doadores.component.html',
   styleUrl: './cadastro-doadores.component.css'
 })
 export class CadastroDoadoresComponent {
+  activeModal = inject(NgbActiveModal);
   subscription$!: Subscription;
-  formDoador!: FormGroup;
-  constructor(private doadoresService: DoadoresService, private formBuilder: FormBuilder){
-  }
-
-  ngOnInit(): void {
-    this.formDoador = this.formBuilder.group({
-      nomeCompleto: [null, [Validators.required, Validators.maxLength(200)]],
-      email: [null, [Validators.required, Validators.email, Validators.maxLength(100)]],
-      dataNascimento: [null, [Validators.required]],
-      genero: [null, [Validators.required]],
-      peso: [null, [Validators.required]],
-      tipoSanguineo: [null, [Validators.required]],
-      fatorRh: [null, [Validators.required]],
-      cep: [null, [Validators.required]]
-    });
+  constructor(private doadoresService: DoadoresService){
   }
 
   ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
-  }
-
-
-  onSubmit(){
-    if(this.formDoador.valid){
-      this.doadoresService.cadastrarDoador(this.formDoador.value).subscribe({
-        next: (res) => {
-          alert('cadastrou');
-          this.formDoador.reset();
-        }
-      })
+    if(this.subscription$){
+      this.subscription$.unsubscribe();
     }
   }
 
-  validaCampo(field: string){
-    return this.formDoador.get(field)?.touched && !this.formDoador.get(field)?.valid;
+
+  submit(event: any){
+    this.subscription$ = this.doadoresService.cadastrarDoador(event).subscribe({
+      next: (res) => {
+        alert('cadastrou');
+        this.activeModal.dismiss();
+      }
+    });
   }
 }
