@@ -83,6 +83,8 @@
 
             <h4 class="mb-3">Endereço</h4>
 
+            
+
             <div class="col-sm-6">
                 <label for="cep" class="form-label">CEP</label>
                 <input formControlName="cep" name="cep" mask="00000-000" type="text" class="form-control" id="cep" placeholder="00000-000">
@@ -91,8 +93,27 @@
                 </div>
             </div>
 
-            
+            @if(doador){
+                <div class="col-sm-6">
+                    <label for="logradouro" class="form-label">Logradouro</label>
+                    <input [readonly]="true" type="text"  class="form-control" id="logradouro" [value]="doador.endereco.logradouro">
+                </div>
+    
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="cidade" class="form-label">Cidade</label>
+                        <input [readonly]="true" type="text"  class="form-control" id="cidade" [value]="doador.endereco.cidade">
+                    </div>
+        
+                    <div class="col-sm-6">
+                        <label for="estado" class="form-label">Estado</label>
+                        <input [readonly]="true" type="text"  class="form-control" id="estado" [value]="doador.endereco.estado">
+                    </div>
+                </div>
+            }
+
+
             <hr class="my-4">
 
-            <button (click)="onSubmit()" class="w-100 btn btn-primary" type="submit">{{doador ? 'Atualizar' : 'Cadastrar'}}</button>
+            <button [disabled]="!formDoador.valid" (click)="onSubmit()" class="w-100 btn btn-primary" type="submit">{{doador ? 'Atualizar' : 'Cadastrar'}}</button>
         </form>

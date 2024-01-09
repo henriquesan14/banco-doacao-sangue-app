@@ -28,7 +28,7 @@
 
         <hr class="my-4">
 
-        <button (click)="onSubmit()" class="w-100 btn btn-primary" type="submit">Cadastrar</button>
+        <button [disabled]="!formDoacao.valid" (click)="onSubmit()" class="w-100 btn btn-primary" type="submit">Cadastrar</button>
     </form>
 
 </div>

@@ -4,8 +4,21 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #f8f9fa;
+    background-color: #2f353a;
     padding-top: 60px; /* Espaçamento para evitar sobreposição com o menu */
   }
+
+.sidebar a {
+  
+  color: #fff;
+}
+
+.sidebar a:hover {
+  background-color: #20a8d8;
+}
+
+.active {
+  background-color: #3a4248;
+}
 
   

@@ -1,7 +1,8 @@
 <div class="sidebar">
     <nav class="nav flex-column">
-      <a class="nav-link active" routerLink="/doadores">Doadores</a>
-      <a class="nav-link" routerLink="/doacoes">Doações</a>
-      <a class="nav-link" routerLink="/">Estoque sangue</a>
+      <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Estoque sangue</a>
+      <a class="nav-link" routerLink="/doadores" routerLinkActive="active">Doadores</a>
+      <a class="nav-link" routerLink="/doacoes" routerLinkActive="active" >Doações</a>
+      
     </nav>
   </div>

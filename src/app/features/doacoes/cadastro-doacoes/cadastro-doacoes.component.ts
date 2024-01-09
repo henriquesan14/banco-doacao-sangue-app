@@ -72,6 +72,15 @@ export class CadastroDoacoesComponent {
           this.resetarSelectAutoComplete();
           this.submitEvent.emit();
           this.activeModal.dismiss();
+        },
+        error: (res) => {
+          if(res.error.errors){
+            for (const [key, value] of Object.entries(res.error.errors)) {
+              this.toastr.error(`${key}: ${value}`, 'Erro!');
+            }
+            return;
+          }
+          this.toastr.error(`${res.error.message}`, 'Erro!');
         }
       })
     }
