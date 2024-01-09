@@ -7,6 +7,7 @@ import { SelectAutocompleteComponent } from '../../../shared/components/select-a
 import { Doador } from '../../../core/models/doador.interface';
 import { DoacaoService } from '../../../shared/services/doacao.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cadastro-doacoes',
@@ -25,7 +26,8 @@ export class CadastroDoacoesComponent {
 
   activeModal = inject(NgbActiveModal);
 
-  constructor(private doadoresService: DoadoresService, private doacaoService: DoacaoService, private formBuilder: FormBuilder){
+  constructor(private doadoresService: DoadoresService, private doacaoService: DoacaoService, private formBuilder: FormBuilder,
+    private toastr: ToastrService){
   }
 
   ngOnInit(): void {
@@ -66,6 +68,7 @@ export class CadastroDoacoesComponent {
     if(this.formDoacao.valid){
       this.doacaoService.cadastrarDoacao(this.formDoacao.value).subscribe({
         next: (res) => {
+          this.toastr.success('Doação cadastrada!', 'Sucesso!');
           this.resetarSelectAutoComplete();
           this.submitEvent.emit();
           this.activeModal.dismiss();
