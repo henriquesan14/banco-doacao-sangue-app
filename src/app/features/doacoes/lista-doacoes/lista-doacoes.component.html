@@ -33,6 +33,8 @@
                             {{ doacao.doador.fatorRh == 'positivo' ? '+' : '-' }}
                         </td>
                     </tr>
+                }@empty {
+                    <p>Não há doações</p>
                 }
             </tbody>
         </table>
