@@ -76,6 +76,7 @@ export class CadastroDoacoesComponent {
           this.activeModal.dismiss();
         },
         error: (res) => {
+          this.spinner.hide();
           if(res.error.errors){
             for (const [key, value] of Object.entries(res.error.errors)) {
               this.toastr.error(`${key}: ${value}`, 'Erro!');
