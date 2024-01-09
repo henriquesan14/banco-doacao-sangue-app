@@ -9,11 +9,12 @@ import { NgbModal, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CadastroDoadoresComponent } from '../cadastro-doadores/cadastro-doadores.component';
 import { EdicaoDoadoresComponent } from '../edicao-doadores/edicao-doadores.component';
 import { ModalVisualizarDoadorComponent } from '../modal-visualizar-doador/modal-visualizar-doador.component';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-lista-doadores',
   standalone: true,
-  imports: [CommonModule,FontAwesomeModule, NgbTooltipModule],
+  imports: [CommonModule,FontAwesomeModule, NgbTooltipModule, NgxSpinnerModule],
   templateUrl: './lista-doadores.component.html',
   styleUrl: './lista-doadores.component.css'
 })
@@ -26,7 +27,7 @@ export class ListaDoadoresComponent implements OnDestroy {
 
   private modalService = inject(NgbModal);
 
-  constructor(private doadorService: DoadoresService){}
+  constructor(private doadorService: DoadoresService, private spinner: NgxSpinnerService){}
 
   ngOnInit(): void {
     this.getDoadores();
@@ -37,9 +38,13 @@ export class ListaDoadoresComponent implements OnDestroy {
   }
 
   getDoadores(){
+    this.spinner.show();
     this.subscription$ = this.doadorService.buscaDoadores().subscribe({
       next: (res: Doador[]) => {
         this.doadores = res;
+      },
+      complete: () => {
+        this.spinner.hide();
       }
     });
   }

@@ -7,11 +7,12 @@ import { NgbModal, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { faEye, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CadastroDoacoesComponent } from '../cadastro-doacoes/cadastro-doacoes.component';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-lista-doacoes',
   standalone: true,
-  imports: [CommonModule,FontAwesomeModule, NgbTooltipModule],
+  imports: [CommonModule,FontAwesomeModule, NgbTooltipModule, NgxSpinnerModule],
   templateUrl: './lista-doacoes.component.html',
   styleUrl: './lista-doacoes.component.css'
 })
@@ -24,7 +25,7 @@ export class ListaDoacoesComponent implements OnDestroy {
 
   private modalService = inject(NgbModal);
 
-  constructor(private doacaoService: DoacaoService){}
+  constructor(private doacaoService: DoacaoService, private spinner: NgxSpinnerService){}
 
   ngOnInit(): void {
     this.getDoacoes();
@@ -35,9 +36,13 @@ export class ListaDoacoesComponent implements OnDestroy {
   }
 
   getDoacoes(){
+    this.spinner.show();
     this.subscription$ = this.doacaoService.buscaDoacoes().subscribe({
       next: (res: Doacao[]) => {
         this.doacoes = res;
+      },
+      complete: () => {
+        this.spinner.hide();
       }
     });
   }

@@ -8,11 +8,12 @@ import { Doador } from '../../../core/models/doador.interface';
 import { DoacaoService } from '../../../shared/services/doacao.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinner, NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-cadastro-doacoes',
   standalone: true,
-  imports: [ReactiveFormsModule, NgxMaskDirective, SelectAutocompleteComponent],
+  imports: [ReactiveFormsModule, NgxMaskDirective, SelectAutocompleteComponent, NgxSpinnerModule],
   templateUrl: './cadastro-doacoes.component.html',
   styleUrl: './cadastro-doacoes.component.css'
 })
@@ -27,7 +28,7 @@ export class CadastroDoacoesComponent {
   activeModal = inject(NgbActiveModal);
 
   constructor(private doadoresService: DoadoresService, private doacaoService: DoacaoService, private formBuilder: FormBuilder,
-    private toastr: ToastrService){
+    private toastr: ToastrService, private spinner: NgxSpinnerService){
   }
 
   ngOnInit(): void {
@@ -65,6 +66,7 @@ export class CadastroDoacoesComponent {
 
 
   onSubmit(){
+    this.spinner.show();
     if(this.formDoacao.valid){
       this.doacaoService.cadastrarDoacao(this.formDoacao.value).subscribe({
         next: (res) => {
@@ -81,6 +83,9 @@ export class CadastroDoacoesComponent {
             return;
           }
           this.toastr.error(`${res.error.message}`, 'Erro!');
+        },
+        complete: () => {
+          this.spinner.hide();
         }
       })
     }
