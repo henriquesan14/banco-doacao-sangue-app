@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, inject } from '@angular/core';
 import { DoadoresService } from '../../../shared/services/doadores.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -6,6 +6,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { SelectAutocompleteComponent } from '../../../shared/components/select-autocomplete/select-autocomplete.component';
 import { Doador } from '../../../core/models/doador.interface';
 import { DoacaoService } from '../../../shared/services/doacao.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-cadastro-doacoes',
@@ -19,6 +20,10 @@ export class CadastroDoacoesComponent {
   formDoacao!: FormGroup;
   doadores: Doador[] = [];
   @ViewChild(SelectAutocompleteComponent) selectAutoCompleteComponent!: SelectAutocompleteComponent;
+
+  @Output() submitEvent: EventEmitter<void> = new EventEmitter<void>();
+
+  activeModal = inject(NgbActiveModal);
 
   constructor(private doadoresService: DoadoresService, private doacaoService: DoacaoService, private formBuilder: FormBuilder){
   }
@@ -49,7 +54,7 @@ export class CadastroDoacoesComponent {
     
 
   getDoadores(){
-    this.doadoresService.buscaDoadores().subscribe({
+    this.subscription$ = this.doadoresService.buscaDoadores().subscribe({
       next: (res) => {
         this.doadores = res;
       }
@@ -62,8 +67,8 @@ export class CadastroDoacoesComponent {
       this.doacaoService.cadastrarDoacao(this.formDoacao.value).subscribe({
         next: (res) => {
           this.resetarSelectAutoComplete();
-          alert('cadastrou');
-          this.formDoacao.reset();
+          this.submitEvent.emit();
+          this.activeModal.dismiss();
         }
       })
     }

@@ -1,11 +1,12 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Doacao } from '../../../core/models/doacao.interface';
 import { DoacaoService } from '../../../shared/services/doacao.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { faEye, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { CadastroDoacoesComponent } from '../cadastro-doacoes/cadastro-doacoes.component';
 
 @Component({
   selector: 'app-lista-doacoes',
@@ -20,6 +21,8 @@ export class ListaDoacoesComponent implements OnDestroy {
   faPencil = faPencil;
   faTrash = faTrash;
   faEye = faEye;
+
+  private modalService = inject(NgbModal);
 
   constructor(private doacaoService: DoacaoService){}
 
@@ -38,4 +41,13 @@ export class ListaDoacoesComponent implements OnDestroy {
       }
     });
   }
+
+  open() {
+		const modalRef = this.modalService.open(CadastroDoacoesComponent, {
+      size: 'lg'
+    });
+    modalRef.componentInstance.submitEvent.subscribe((e: any) => {
+     this.getDoacoes();
+    });
+	}
 }

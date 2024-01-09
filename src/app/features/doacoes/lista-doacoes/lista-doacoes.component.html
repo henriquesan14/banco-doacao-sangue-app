@@ -1,5 +1,6 @@
 <h4 class="card-header text-center">Doações Últimos 30 dias</h4>
 <div class="container">
+    <button (click)="open()" class="btn btn-primary mb-1">Nova doação</button>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -11,7 +12,6 @@
                     <th>Gênero</th>
                     <th>Tipo sanguíneo</th>
                     <th>Fator RH</th>
-                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,19 +35,6 @@
                         </td>
                         <td>
                             {{ doacao.doador.fatorRh == 'positivo' ? '+' : '-' }}
-                        </td>
-
-                        <td style="white-space:nowrap;">
-                            <button ngbTooltip="Visualizar" class="btn btn-primary btn-sm me-1">
-                                <fa-icon [icon]="faEye">
-                                </fa-icon>
-                            </button>
-                            <button ngbTooltip="Alterar" class="btn btn-success btn-sm me-1">
-                                <fa-icon [icon]="faPencil"></fa-icon>
-                            </button>
-                            <button ngbTooltip="Excluir" class="btn btn-danger btn-sm">
-                                <fa-icon [icon]="faTrash"></fa-icon>
-                            </button>
                         </td>
                     </tr>
                 }
