@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Doador } from '../../core/models/doador.interface';
 import { DoadorExt } from '../../core/models/doador-ext';
+import { Doacao } from '../../core/models/doacao.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,9 @@ export class DoadoresService {
 
   buscaDoador(id: number): Observable<DoadorExt>{
     return this.http.get<DoadorExt>(`${this.API}/api/doador/${id}`);
+  }
+
+  buscaDoacoesPorDoador(id: number): Observable<Doacao[]>{
+    return this.http.get<Doacao[]>(`${this.API}/api/doador/${id}/doacoes`);
   }
 }

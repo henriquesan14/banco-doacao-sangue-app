@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h4 class="modal-title text-center">Visualizar Doador</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Quantidade (Ml)</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(doacao of doacoes; track doacao.id){
+                    <tr>
+                        <td>
+                            {{doacao.id}}
+                        </td>
+                        <td>
+                            {{doacao.quantidadeMl}}
+                        </td>
+                        <td>
+                            {{doacao.criadoEm | date: 'dd/MM/yyyy'}}
+                        </td>
+                    </tr>
+                }@empty {
+                    <p>Não há doações</p>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

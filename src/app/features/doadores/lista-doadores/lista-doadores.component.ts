@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModal, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CadastroDoadoresComponent } from '../cadastro-doadores/cadastro-doadores.component';
 import { EdicaoDoadoresComponent } from '../edicao-doadores/edicao-doadores.component';
+import { ModalVisualizarDoadorComponent } from '../modal-visualizar-doador/modal-visualizar-doador.component';
 
 @Component({
   selector: 'app-lista-doadores',
@@ -68,5 +69,12 @@ export class ListaDoadoresComponent implements OnDestroy {
     modalRef.componentInstance.submitEvent.subscribe((e: any) => {
      this.getDoadores();
     });
+  }
+
+  openModalVisualizar(doador: any){
+    const modalRef = this.modalService.open(ModalVisualizarDoadorComponent, {
+      size: 'lg'
+    });
+    modalRef.componentInstance.doador = doador;
   }
 }
