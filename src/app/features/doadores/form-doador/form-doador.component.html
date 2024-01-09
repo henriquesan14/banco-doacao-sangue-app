@@ -68,8 +68,8 @@
                     <label for="fatorRh" class="form-label">Fator RH</label>
                     <select formControlName="fatorRh" name="fatorRh" id="fatorRh" class="form-select" aria-label="Default select example">
                         <option selected value="null">Selecione um fator RH</option>
-                        <option value="A">Positivo</option>
-                        <option value="B">Negativo</option>
+                        <option value="positivo">Positivo</option>
+                        <option value="negativo">Negativo</option>
                     </select>
                     <div class="invalid-feedback">
                         Valid first name is required.
@@ -94,5 +94,5 @@
             
             <hr class="my-4">
 
-            <button (click)="onSubmit()" class="w-100 btn btn-primary" type="submit">Cadastrar</button>
+            <button (click)="onSubmit()" class="w-100 btn btn-primary" type="submit">{{doador ? 'Atualizar' : 'Cadastrar'}}</button>
         </form>

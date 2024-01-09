@@ -1,0 +1,8 @@
+<div class="modal-header">
+    <h4 class="modal-title text-center">Edição de doador</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+    <app-form-doador [doador]="doador" (submitEvent)="submit($event)"></app-form-doador>
+</div>
