@@ -1,7 +1,7 @@
 <h4 class="card-header text-center">Estoque Sangue</h4>
 <div class="container">    
     <div class="row">
-        @for(estoque of estoqueSangue; track $index){
+        @for(estoque of estoqueSangue$ | async; track $index){
             <div class="col-sm-2">
                 <h3>{{estoque.tipoSanguineo}}{{estoque.fatorRh == 'positivo' ? '+' : '-'}}</h3>
                 <div [ngClass]="{

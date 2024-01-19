@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EstoqueSangueService } from '../../../shared/services/estoque-sangue.service';
 import { RelatorioEstoqueSangue } from '../../../core/models/relatorio-estoque-sangue';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-relatorio-estoque-sangue',
@@ -14,18 +14,14 @@ import { CommonModule } from '@angular/common';
 export class RelatorioEstoqueSangueComponent implements OnInit {
 
   constructor(private estoqueSangueService: EstoqueSangueService){}
-  estoqueSangue: RelatorioEstoqueSangue[] = [];
+  estoqueSangue$: Observable<RelatorioEstoqueSangue[]> = new Observable<RelatorioEstoqueSangue[]>;
 
   ngOnInit(): void {
     this.relatorioEstoqueSangue();
   }
 
   relatorioEstoqueSangue(){
-    this.estoqueSangueService.relatorioEstoqueSangue().subscribe({
-      next: (res: RelatorioEstoqueSangue []) => {
-        this.estoqueSangue = res
-      }
-    });
+    this.estoqueSangue$ = this.estoqueSangueService.relatorioEstoqueSangue();
   }
 
   getSituacao(quantidadeMl: number){
